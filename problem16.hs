@@ -1,6 +1,8 @@
--- solution = 1189 # Stimmt aber irgendwie nicht
+-- solution = 1189
+-- stimmt aber irgendwie nicht
+-- obwohl es für das Beispiel funktioniert
 solution :: Integer
-solution = sumOfDigits (round (2**15))
+solution = sumOfDigits (round (2**1000))
 
 sumOfDigits :: Integer -> Integer
 sumOfDigits number

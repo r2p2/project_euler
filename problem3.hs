@@ -1,34 +1,36 @@
-primeFactorOf :: Integer -> [Integer]
-primeFactorOf number =
-	primeFactorOf_helper number number []
+-- viel zu langsam --
 
-primeFactorOf_helper :: Integer -> Integer -> [Integer] -> [Integer]
-primeFactorOf_helper number counter list
+main = print solution
+
+solution :: [Integer]
+solution =
+	primeFactorOf 600851475143 primes
+	where
+		primes = sieve [2..600851475143] -- optimieren!!! sqrt
+
+primeFactorOf :: Integer -> [Integer] -> [Integer]
+primeFactorOf number primes =
+	primeFactorOf_helper number number [] primes
+
+primeFactorOf_helper :: Integer -> Integer -> [Integer] -> [Integer] -> [Integer]
+primeFactorOf_helper number counter list primes
 	| counter == 0 =
 		list
 	| counter > 0 =
-		case isPrime counter of
+		case isPrime counter primes of
 			True ->
 				if number `mod` counter == 0
 					then
-						primeFactorOf_helper number (counter-1) (counter : list)
+						primeFactorOf_helper number (counter-1) (counter : list) primes
 					else
-						primeFactorOf_helper number (counter-1) list
-			False -> primeFactorOf_helper number (counter-1) list
+						primeFactorOf_helper number (counter-1) list primes
+			False -> primeFactorOf_helper number (counter-1) list primes 
 
 ---------------------------------------------------------------------
--- to slow -- 
-isPrime :: Integer -> Bool
-isPrime number =
-	isPrime_helper number 2 number
+-- faster -- 
+isPrime :: Integer -> [Integer] -> Bool
+isPrime number primelist = number `elem` primelist
 
-isPrime_helper :: Integer -> Integer -> Integer -> Bool
-isPrime_helper number count to
-	| number < 2 =
-		False
-	| count == to =
-		True
-	| number `mod` count == 0 =
-		False
-	| count < to =
-		isPrime_helper number (count+1) to
+sieve :: [Integer] -> [Integer]
+sieve [] = []
+sieve (h:t) = h:(sieve ([x|x<-t, x `rem` h /= 0]))

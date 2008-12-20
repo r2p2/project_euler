@@ -6,7 +6,7 @@ solution :: [Integer]
 solution =
 	primeFactorOf 600851475143 primes
 	where
-		primes = sieve [2..600851475143] -- optimieren!!! sqrt
+		primes = sieve [2..truncate(sqrt 600851475143)]
 
 primeFactorOf :: Integer -> [Integer] -> [Integer]
 primeFactorOf number primes =

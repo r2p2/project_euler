@@ -1,4 +1,4 @@
-solution = (sieve [2..1000000] !! 10000)
+solution = (sieve [2..] !! 10000)
 
 sieve :: [Integer] -> [Integer]
 sieve [] = []
